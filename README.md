@@ -1,13 +1,14 @@
 # bike-store-project
 
 Deskripsi Proyek
-Proyek ini merupakan analisis komprehensif terhadap ekosistem penjualan toko sepeda. Alur kerja dimulai dari pembersihan database relasional menggunakan sql, pemodelan prediktif untuk korelasi dan prediksi menggunakan machine learning dengan model random forest dan kmeans, dan diakhiri dengan pembuatan dashboard interaktif di power BI dan Tableau.
+Proyek ini bertujuan untuk mentransformasi data transaksi mentah menjadi strategi bisnis yang terukur melalui integrasi SQL, Python, dan Looker Studio. Alur kerja dimulai dengan proses data engineering menggunakan SQL untuk memastikan kebersihan dan kesiapan data dari database relasional.
+Pada tahap analisis, proyek ini menerapkan tiga pendekatan Machine Learning: algoritma FP-Growth digunakan untuk mengungkap pola pembelian silang (cross-selling), sementara K-Means Clustering mengelompokkan pelanggan berdasarkan loyalitas dan perilaku belanja. Untuk perencanaan masa depan, model Prophet diimplementasikan guna memprediksi tren penjualan secara akurat dengan mempertimbangkan pola musiman.
 
 Tech Stack & Alat
 - Database: MySQL (Data Cleaning, Transformation, & EDA).
-- Programming: Python (Pandas, Scikit-Learn, Matplotlib, Seaborn).
-- BI Tool: Power BI Desktop, Tableau.
-- Library ML: Random Forest Regressor (Forecasting), Kmeans.
+- Programming: Python (Pandas, Scikit-Learn, Matplotlib, Seaborn, mlxtend, prophet, statsmodel).
+- BI Tool: Power BI Desktop, Tableau, Looker Studio.
+- Library ML: FP-Growth, Kmeans, prohet.
   
 Tahap 1: SQL Data Engineering & EDA
 - Data Cleaning: Menggabungkan nama depan dan belakang pelanggan/staf, serta menangani *missing values* pada data pengiriman.
@@ -18,14 +19,20 @@ Tahap 1: SQL Data Engineering & EDA
   - Menganalisis *shipping time* (waktu pengiriman) menggunakan `DATEDIFF`.
   - Mengidentifikasi produk, brand, dan kategori dengan pendapatan tertinggi.
 
-tahap 2: Predictive Modeling (Machine Learning)
-Menggunakan algoritma Random Forest Regressor untuk memprediksi jumlah penjualan (*Quantity*) di masa depan.
-- Feature Engineering: Mengekstrak fitur `month` untuk menangkap pola musiman dan menggunakan *One-Hot Encoding* untuk fitur kategori.
-- Feature Importance: Visualisasi untuk mengidentifikasi variabel utama (seperti Brand atau Kategori) yang paling mempengaruhi volume penjualan.
+tahap 2: Product Affinity & Market Basket Analysis (FP-Growth)
+Menggunakan algoritma FP-Growth (Frequent Pattern Growth) untuk menggali pola tersembunyi dalam transaksi pelanggan dan memahami keterkaitan antar produk.
+- Output: Menghasilkan metrik Support, Confidence, dan Lift untuk menentukan kekuatan hubungan antar produk.
+- Manfaat: Menentukan strategi Product Bundling (paket hemat) dan rekomendasi produk yang lebih akurat.
 
-tahap 3: Customer Segmentation (RFM Analysis)
+tahap 3: Customer Segmentation (K-Means)
 Menggunakan teknik RFM (Recency, Frequency, Monetary) yang digabungkan dengan algoritma K-Means Clustering untuk mengelompokkan pelanggan.
-- Scaling: Menggunakan `StandardScaler` untuk normalisasi data.
-- Clustering: Membagi pelanggan ke dalam 3 segmen otomatis untuk membantu tim pemasaran menentukan strategi *retention* yang tepat.
- tahap 4: Power BI Integration
+- Output: Membagi pelanggan ke dalam 3 segmen (misal: Loyal, At-Risk, New) secara otomatis
+- Manfaat: Membantu tim pemasaran membuat kampanye iklan yang tepat sasaran untuk tiap jenis pelanggan.
+  
+tahap 4: Forecast (Prophet)
+Melakukan prediksi penjualan masa depan untuk membantu perencanaan stok dan target pendapatan.
+- Output: Menghasilkan nilai prediksi (yhat) beserta rentang batas atas (yhat_upper) dan batas bawah (yhat_lower) sebagai margin keamanan statistik.
+- Manfaat: Memberikan gambaran target penjualan yang realistis bagi manajemen untuk periode tertentu ke depan.
+  
+tahap 5: BI Dashboard (looker studio)
 Dashboard interaktif yang menyatukan seluruh hasil analisis
